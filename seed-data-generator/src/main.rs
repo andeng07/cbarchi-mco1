@@ -8,11 +8,13 @@ struct Args {
     min: u64,
     #[arg(long)]
     max: u64,
+    #[arg(short, long)]
+    output: String,
 }
 
 fn main() -> Result<(), String> {
     let args = Args::parse();
-    
+
     validate_args(&args)?;
 
     let seed = args.seed;
@@ -22,7 +24,7 @@ fn main() -> Result<(), String> {
     println!("Seed: {}", args.seed);
     println!("Min: {}", args.min);
     println!("Max: {}", args.max);
-    
+
     return Ok(());
 }
 
@@ -33,6 +35,10 @@ fn validate_args(args: &Args) -> Result<(), String> {
 
     if args.max < args.min {
         return Err("max cannot be less than than min".to_string());
+    }
+
+    if args.output.is_empty() {
+        return Err("output file name cannot be empty".to_string());
     }
 
     return Ok(());
