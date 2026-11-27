@@ -5,9 +5,9 @@ pub struct Args {
     #[arg(short, long)]
     pub seed: u64,
     #[arg(long)]
-    pub min: u64,
+    pub min: usize,
     #[arg(long)]
-    pub max: u64,
+    pub max: usize,
     #[arg(short, long)]
     pub output: String,
 }
