@@ -1,22 +1,30 @@
+use crate::generator::Generator;
 use rand::rngs::StdRng;
 use rand_distr::{Distribution, Gamma, Poisson};
 
-pub fn generate_daily_counts(rng: &mut StdRng, amount: u64) -> Vec<usize> {
-    let mut remaining = amount;
-    let mut daily_counts = Vec::new();
+pub struct DistributionGenerator<'a> {
+    rng: &'a mut StdRng,
+    amount: usize,
+}
 
-    let gamma = Gamma::new(20.0, 5.0).unwrap();
+impl Generator<Vec<usize>> for DistributionGenerator<'_> {
+    fn generate(&mut self) -> Vec<usize> {
+        let mut remaining = self.amount;
+        let mut daily_counts = Vec::new();
 
-    while remaining > 0 {
-        let lambda = gamma.sample(rng);
-        let distribution = Poisson::new(lambda).unwrap();
+        let gamma = Gamma::new(20.0, 5.0).unwrap();
 
-        let generated = distribution.sample(rng) as usize;
-        let count = generated.min(remaining as usize);
+        while remaining > 0 {
+            let lambda = gamma.sample(self.rng);
+            let distribution = Poisson::new(lambda).unwrap();
 
-        daily_counts.push(count);
-        remaining -= count as u64;
+            let generated = distribution.sample(self.rng) as usize;
+            let count = generated.min(remaining);
+
+            daily_counts.push(count);
+            remaining -= count;
+        }
+
+        daily_counts
     }
-
-    daily_counts
 }
