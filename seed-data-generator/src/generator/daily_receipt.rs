@@ -20,7 +20,7 @@ impl Generator<()> for DailyReceiptGenerator<'_> {
 
         for (date, receipts_count) in dates.zip(self.daily_distribution.iter()) {
             for _ in 0..*receipts_count {
-                let price = self.rng.random_range(100.0..999.99);
+                let price = self.rng.random_range(10000..99999);
 
                 writeln!(
                     self.output,
