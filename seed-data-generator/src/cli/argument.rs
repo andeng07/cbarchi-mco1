@@ -1,3 +1,4 @@
+use chrono::NaiveDate;
 use clap::Parser;
 
 #[derive(Parser)]
@@ -8,6 +9,8 @@ pub struct Args {
     pub min: usize,
     #[arg(long)]
     pub max: usize,
+    #[arg(long)]
+    pub start_date: NaiveDate,
     #[arg(short, long)]
     pub output: String,
 }
