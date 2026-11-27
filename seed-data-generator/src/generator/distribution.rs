@@ -3,8 +3,8 @@ use rand::rngs::StdRng;
 use rand_distr::{Distribution, Gamma, Poisson};
 
 pub struct DistributionGenerator<'a> {
-    rng: &'a mut StdRng,
-    amount: usize,
+    pub rng: &'a mut StdRng,
+    pub amount: usize,
 }
 
 impl Generator<Vec<usize>> for DistributionGenerator<'_> {
