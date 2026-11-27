@@ -1,6 +1,6 @@
 use chrono::NaiveDate;
 
 pub struct Receipt {
-    price: f32,
-    date_time: NaiveDate,
+    pub price: f32,
+    pub date: NaiveDate,
 }
