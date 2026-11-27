@@ -1,6 +1,5 @@
 mod cli;
 mod generator;
-mod model;
 
 use clap::Parser;
 use rand::{RngExt, SeedableRng, rngs::StdRng};
@@ -35,13 +34,14 @@ fn main() -> Result<(), String> {
 
     let mut output = std::fs::File::create(output).map_err(|e| e.to_string())?;
 
-    let receipts = DailyReceiptGenerator {
+    let mut receipts = DailyReceiptGenerator {
         rng: &mut rng,
         daily_distribution: &daily_distribution,
         start_date: &start_date,
         output: &mut output,
-    }
-    .generate();
+    };
+
+    receipts.generate();
 
     return Ok(());
 }
